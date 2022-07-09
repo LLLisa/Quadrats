@@ -2,9 +2,6 @@ module.exports = {
   entry: 'index.js',
 
   devtool: 'source-map',
-  experiments: {
-    topLevelAwait: true,
-  },
   module: {
     rules: [
       {

@@ -21,3 +21,5 @@ const init = () => {
 };
 
 init();
+
+module.exports = { port };
