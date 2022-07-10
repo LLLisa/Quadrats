@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const { seed } = require('./db');
+
+const { seed, gridGen } = require('./db');
 
 const port = process.env.PORT || 1337;
 
