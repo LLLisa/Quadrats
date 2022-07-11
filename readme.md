@@ -4,15 +4,15 @@ Let's start with a simple gameplay example on a 3x3 grid. As you can see in the 
 
 ![image](/roadmap/wireframes/quadrats1.png)
 
-Every time a tile is placed or moved, the game will calulate the score. Scoring is based on what tiles are present and in what configuration. In the example above, the only score generated is for having the notes of the B Major chord present:
+Every time a tile is placed or moved, the game will calulate the score. Scoring is based on what tiles are present and in what configuration. In the example above, the only score generated is for having the notes of the B Major chord (B, D#, and F#) present:
 
 ![image](/roadmap/wireframes/quadrats2.png)
 
-If we do a bit of rearranging, we can also get points for having the french flag configuration:
+If we do a bit of rearranging, we can also get points for having the french flag configuration (the red, white, and blue tiles at the bottom). Configurations like this must be placed in exactly this way; the 3 tils arranged vertically would not score.
 
 ![image](/roadmap/wireframes/quadrats3.png)
 
-As you can see, the scoring circumstances are additive. In this example, we get points for the B Major chord and the French flag together in the same grid. If we do a bit more rearranging...
+As you can see, the scoring circumstances are additive. In this example, we get points for the B Major chord plus the points for the French flag in the same grid. If we do a bit more rearranging...
 
 ![image](/roadmap/wireframes/quadrats4.png)
 
