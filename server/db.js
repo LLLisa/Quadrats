@@ -42,4 +42,4 @@ const seed = async () => {
   }
 };
 
-module.exports = { seed, gridGen };
+module.exports = { db, Tile, seed, gridGen };

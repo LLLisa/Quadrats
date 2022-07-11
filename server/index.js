@@ -1,16 +1,6 @@
-const express = require('express');
-const app = express();
-const path = require('path');
-
-const { seed, gridGen } = require('./db');
-
+const app = require('./api');
 const port = process.env.PORT || 1337;
-
-app.use('/dist', express.static(path.join(__dirname, '../dist')));
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
-});
+const { seed } = require('./db');
 
 const init = () => {
   try {
