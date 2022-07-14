@@ -3,16 +3,12 @@ import axios from 'axios';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 
-const initialState = {
-  mainTiles: [420],
-};
-
 const mainTilesSlice = createSlice({
   name: 'mainTiles',
-  initialState,
+  initialState: [],
   reducers: {
     fetchTiles: (state, action) => {
-      state.mainTiles = action.payload;
+      state.push(...action.payload);
     },
   },
 });
