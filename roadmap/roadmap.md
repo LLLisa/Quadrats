@@ -7,3 +7,5 @@ sample tile props are
 - shape
 
 In random pool, have a way to mark tiles so they aren't lost when the 'randomize' button is pressed
+
+"undo" feature

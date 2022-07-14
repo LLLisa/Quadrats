@@ -8,7 +8,7 @@ Every time a tile is placed or moved, the game will calulate the score. Scoring 
 
 ![image](/roadmap/wireframes/quadrats2.png)
 
-If we do a bit of rearranging, we can also get points for having the french flag configuration (the red, white, and blue tiles at the bottom). Configurations like this must be placed in exactly this way; the 3 tils arranged vertically would not score.
+If we do a bit of rearranging, we can also get points for having the french flag configuration (the red, white, and blue tiles at the bottom). Configurations like this must be placed in exactly this way; the 3 tiles arranged in reverse or vertically would not score.
 
 ![image](/roadmap/wireframes/quadrats3.png)
 
