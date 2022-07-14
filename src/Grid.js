@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Tile from './Tile';
 
 const Grid = () => {
   const state = useSelector((state) => state);
@@ -12,7 +13,7 @@ const Grid = () => {
           {state.mainTiles.map((tile) => {
             return (
               <li key={tile.id}>
-                {tile.alphanum}, {tile.color}, {tile.shape}
+                <Tile props={tile} />
               </li>
             );
           })}

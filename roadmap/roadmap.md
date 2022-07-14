@@ -9,3 +9,4 @@ sample tile props are
 In random pool, have a way to mark tiles so they aren't lost when the 'randomize' button is pressed
 
 "undo" feature
+use unicode for POC tile shapes
