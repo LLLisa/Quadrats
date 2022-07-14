@@ -6,6 +6,7 @@ const { db, Tile } = require('./db');
 module.exports = app;
 
 app.use('/dist', express.static(path.join(__dirname, '../dist')));
+app.use('/public', express.static(path.join(__dirname, '../public')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));

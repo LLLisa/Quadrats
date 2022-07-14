@@ -3,14 +3,15 @@ import { useSelector } from 'react-redux';
 import Tile from './Tile';
 
 const Grid = () => {
-  const state = useSelector((state) => state);
+  const mainTiles = useSelector((state) => state.mainTiles);
+  const radius = Math.sqrt(mainTiles.length);
 
   return (
     <div>
       grid
       {
         <ul>
-          {state.mainTiles.map((tile) => {
+          {mainTiles.map((tile) => {
             return (
               <li key={tile.id}>
                 <Tile props={tile} />

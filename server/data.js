@@ -8,6 +8,7 @@ const [x, circle, triangle, square, pentagon, hexagon] = [
   '\u2B20',
   '\u2B21',
 ];
+
 const shapes = [x, circle, triangle, square, pentagon, hexagon];
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.split('');
