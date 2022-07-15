@@ -5,8 +5,8 @@ import Tile from './Tile';
 const Grid = () => {
   const mainTiles = useSelector((state) => state.mainTiles);
   const radius = Math.sqrt(mainTiles.length);
-  //   const rows = genRows(mainTiles);
   const [grid, setGrid] = useState([]);
+  const [firstPick, setFirstPick] = useState([]);
 
   useEffect(() => {
     setGrid(genRows(mainTiles));
@@ -25,22 +25,30 @@ const Grid = () => {
     return result;
   }
 
-  function handleSwitch() {
-    const swapGrid = grid.slice();
-    [swapGrid[0][0], swapGrid[0][1]] = [swapGrid[0][1], swapGrid[0][0]];
-    setGrid(swapGrid);
+  function handleSwitch([x1, y1], [x2, y2]) {
+    [grid[x1][y1], grid[x2][y2]] = [grid[x2][y2], grid[x1][y1]];
+    setGrid([...grid]);
+  }
+
+  function handlePick(i, j) {
+    if (!firstPick.length) {
+      setFirstPick([i, j]);
+    } else {
+      handleSwitch(firstPick, [i, j]);
+      setFirstPick([]);
+    }
   }
 
   return (
     <div>
       grid
-      <button onClick={handleSwitch}>switch</button>
+      <button onClick={() => console.log(grid[0])}>switch</button>
       <table>
         <tbody>
           {grid.map((row, i) => (
             <tr key={i}>
               {row.map((tile, j) => (
-                <td key={j}>
+                <td key={j} onClick={() => handlePick(i, j)}>
                   {<Tile props={tile} />}
                   {i},{j}
                 </td>
