@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Tile from './Tile';
 
 const Grid = () => {
   const mainTiles = useSelector((state) => state.mainTiles);
   const radius = Math.sqrt(mainTiles.length);
-  const rows = genRows(mainTiles);
+  //   const rows = genRows(mainTiles);
+  const [grid, setGrid] = useState([]);
+
+  useEffect(() => {
+    setGrid(genRows(mainTiles));
+  }, [mainTiles.length]);
 
   function genRows(array) {
     let tiles = array.slice();
@@ -13,7 +18,6 @@ const Grid = () => {
     for (let i = 0; i < radius; i++) {
       const row = [];
       for (let j = 0; j < radius; j++) {
-        //should be pop() for performance
         row.push(tiles.pop());
       }
       result.push(row);
@@ -21,12 +25,19 @@ const Grid = () => {
     return result;
   }
 
+  function handleSwitch() {
+    const swapGrid = grid.slice();
+    [swapGrid[0][0], swapGrid[0][1]] = [swapGrid[0][1], swapGrid[0][0]];
+    setGrid(swapGrid);
+  }
+
   return (
     <div>
       grid
+      <button onClick={handleSwitch}>switch</button>
       <table>
         <tbody>
-          {rows.map((row, i) => (
+          {grid.map((row, i) => (
             <tr key={i}>
               {row.map((tile, j) => (
                 <td key={j}>
