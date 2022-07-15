@@ -3,7 +3,6 @@ import React from 'react';
 const Tile = ({ props }) => {
   const { alphanum, color, shape } = props;
 
-  //todo: border alphanum
   return (
     <div className='tile' style={{ backgroundColor: color }}>
       <div className='alphanum'>{alphanum}</div>{' '}
@@ -13,6 +12,8 @@ const Tile = ({ props }) => {
             ? 'shape circle'
             : shape === '\u25B3'
             ? 'shape triangle'
+            : shape === '\u25A1'
+            ? 'shape square'
             : 'shape'
         }
       >
