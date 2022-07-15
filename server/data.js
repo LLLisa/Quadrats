@@ -2,9 +2,9 @@ const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
 
 const [x, circle, triangle, square, pentagon, hexagon] = [
   '\u0058',
-  '\u25EF',
+  '\u25CB',
   '\u25B3',
-  '\u25A2',
+  '\u25A1',
   '\u2B20',
   '\u2B21',
 ];
