@@ -20,7 +20,8 @@ const Grid = () => {
     for (let i = 0; i < radius; i++) {
       const row = [];
       for (let j = 0; j < radius; j++) {
-        row.push(tiles.pop());
+        //pop() for better performance
+        row.push(tiles.shift());
       }
       result.push(row);
     }
@@ -52,7 +53,7 @@ const Grid = () => {
               {row.map((tile, j) => (
                 <td key={j} onClick={() => handlePick(i, j)}>
                   {<Tile props={tile} />}
-                  {i},{j}
+                  {/* {i},{j} */}
                 </td>
               ))}
             </tr>
