@@ -1,4 +1,14 @@
-const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+const colors = [
+  'red',
+  'orange',
+  'yellow',
+  'green',
+  'blue',
+  'indigo',
+  'violet',
+  'white',
+  'black',
+];
 
 const [x, circle, triangle, square, pentagon, hexagon] = [
   '\u0058',

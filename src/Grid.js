@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTiles } from '../store';
 import Tile from './Tile';
 
 const Grid = () => {
@@ -7,6 +8,7 @@ const Grid = () => {
   const radius = Math.sqrt(mainTiles.length);
   const [grid, setGrid] = useState([]);
   const [firstPick, setFirstPick] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setGrid(genRows(mainTiles));
@@ -28,6 +30,7 @@ const Grid = () => {
   function handleSwitch([x1, y1], [x2, y2]) {
     [grid[x1][y1], grid[x2][y2]] = [grid[x2][y2], grid[x1][y1]];
     setGrid([...grid]);
+    dispatch(setTiles(grid.flat()));
   }
 
   function handlePick(i, j) {
@@ -42,7 +45,6 @@ const Grid = () => {
   return (
     <div>
       grid
-      <button onClick={() => console.log(grid[0])}>switch</button>
       <table>
         <tbody>
           {grid.map((row, i) => (

@@ -4,12 +4,14 @@ import { Provider } from 'react-redux';
 import { store } from '../store';
 import Grid from './Grid';
 import Header from './Header';
+import Score from './Score';
 
 const Root = () => {
   return (
     <div>
       <Header />
       <Grid />
+      <Score />
     </div>
   );
 };

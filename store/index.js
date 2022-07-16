@@ -7,18 +7,18 @@ const mainTilesSlice = createSlice({
   name: 'mainTiles',
   initialState: [],
   reducers: {
-    fetchTiles: (state, action) => {
-      state.push(...action.payload);
+    setTiles: (state, action) => {
+      return action.payload;
     },
   },
 });
 
-export const { fetchTiles } = mainTilesSlice.actions;
+export const { setTiles } = mainTilesSlice.actions;
 
 export const loadTiles = () => {
   return async (dispatch) => {
     const response = await axios.get('/tiles');
-    dispatch(fetchTiles(response.data));
+    dispatch(setTiles(response.data));
   };
 };
 
