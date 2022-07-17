@@ -7,24 +7,43 @@ const mainTilesSlice = createSlice({
   name: 'mainTiles',
   initialState: [],
   reducers: {
-    setTiles: (state, action) => {
+    setMainTiles: (state, action) => {
       return action.payload;
     },
   },
 });
 
-export const { setTiles } = mainTilesSlice.actions;
+const swapTilesSlice = createSlice({
+  name: 'mainTiles',
+  initialState: [],
+  reducers: {
+    setSwapTiles: (state, action) => {
+      return action.payload;
+    },
+  },
+});
 
-export const loadTiles = () => {
+export const { setMainTiles } = mainTilesSlice.actions;
+export const { setSwapTiles } = swapTilesSlice.actions;
+
+export const loadMainTiles = () => {
   return async (dispatch) => {
-    const response = await axios.get('/tiles');
-    dispatch(setTiles(response.data));
+    const response = await axios.get('/mainTiles');
+    dispatch(setMainTiles(response.data));
+  };
+};
+
+export const loadSwapTiles = () => {
+  return async (dispatch) => {
+    const response = await axios.get('/swapTiles');
+    dispatch(setSwapTiles(response.data));
   };
 };
 
 export const store = configureStore({
   reducer: {
     mainTiles: mainTilesSlice.reducer,
+    swapTiles: swapTilesSlice.reducer,
   },
   middleware: [thunk, createLogger({ collapsed: false })],
 });

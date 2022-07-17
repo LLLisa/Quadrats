@@ -3,7 +3,7 @@ const db = new Sequelize('postgres://localhost/quadrats', { logging: false });
 
 const { colors, shapes, chars, randomize } = require('./data');
 
-const Tile = db.define('tile', {
+const MainTile = db.define('mainTile', {
   alphanum: {
     type: Sequelize.ENUM(chars),
   },
@@ -15,9 +15,21 @@ const Tile = db.define('tile', {
   },
 });
 
-const tileGen = async () => {
+const SwapTile = db.define('swapTile', {
+  alphanum: {
+    type: Sequelize.ENUM(chars),
+  },
+  color: {
+    type: Sequelize.ENUM(colors),
+  },
+  shape: {
+    type: Sequelize.ENUM(shapes),
+  },
+});
+
+const tileGen = async (type) => {
   try {
-    await Tile.create({
+    await type.create({
       alphanum: randomize(chars),
       color: randomize(colors),
       shape: randomize(shapes),
@@ -29,7 +41,13 @@ const tileGen = async () => {
 
 const gridGen = (numTiles) => {
   for (let i = 0; i < numTiles; i++) {
-    tileGen();
+    tileGen(MainTile);
+  }
+};
+
+const swapGen = (numTiles) => {
+  for (let i = 0; i < numTiles; i++) {
+    tileGen(SwapTile);
   }
 };
 
@@ -37,9 +55,10 @@ const seed = async () => {
   try {
     await db.sync({ force: true });
     gridGen(64);
+    swapGen(16);
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports = { db, Tile, seed, gridGen };
+module.exports = { db, MainTile, SwapTile, seed, gridGen };

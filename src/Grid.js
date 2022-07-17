@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTiles } from '../store';
+import { setMainTiles } from '../store';
 import Tile from './Tile';
 
 const Grid = () => {
   const mainTiles = useSelector((state) => state.mainTiles);
+  const swapTiles = useSelector((state) => state.swapTiles);
   const radius = Math.sqrt(mainTiles.length);
   const [grid, setGrid] = useState([]);
+  const [pool, setPool] = useState([]);
   const [firstPick, setFirstPick] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setGrid(genRows(mainTiles));
-  }, [mainTiles.length]);
+    setGrid(genRows(mainTiles, radius));
+    if (swapTiles.length) setPool(genRows(swapTiles, 4));
+  }, [swapTiles.length]);
 
-  function genRows(array) {
+  function genRows(array, rowLength) {
     let tiles = array.slice();
     const result = [];
-    for (let i = 0; i < radius; i++) {
+    for (let i = 0; i < rowLength; i++) {
       const row = [];
-      for (let j = 0; j < radius; j++) {
+      for (let j = 0; j < rowLength; j++) {
         //pop() for better performance
         row.push(tiles.shift());
       }
@@ -31,7 +34,7 @@ const Grid = () => {
   function handleSwitch([x1, y1], [x2, y2]) {
     [grid[x1][y1], grid[x2][y2]] = [grid[x2][y2], grid[x1][y1]];
     setGrid([...grid]);
-    dispatch(setTiles(grid.flat()));
+    dispatch(setMainTiles(grid.flat()));
   }
 
   function handlePick(i, j) {
@@ -60,6 +63,25 @@ const Grid = () => {
           ))}
         </tbody>
       </table>
+      swap tiles
+      {pool[0] ? (
+        <table>
+          <tbody>
+            {pool.map((row, i) => (
+              <tr key={i}>
+                {row.map((tile, j) => (
+                  <td key={j} onClick={() => handlePick(i, j)}>
+                    {<Tile props={tile} />}
+                    {/* {i},{j} */}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div>''</div>
+      )}
     </div>
   );
 };

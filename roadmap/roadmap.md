@@ -18,3 +18,4 @@ color shapes
 tictactoe
 spell a color with that color
 Binary numbers
+triforce
