@@ -18,5 +18,5 @@ export const flags = (array) => {
       }
     }
   }
-  return results;
+  return results.length ? results : [];
 };

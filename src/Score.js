@@ -1,11 +1,20 @@
 import React from 'react';
-import { flags } from './scoring/flags';
+import { flags, prime } from './scoring';
 import { useSelector } from 'react-redux';
 
 const Score = () => {
   const mainTiles = useSelector((state) => state.mainTiles);
 
-  const results = flags(mainTiles);
+  const catgegories = [flags, prime];
+
+  const results = catgegories.reduce((result, current) => {
+    return Array.isArray(current(mainTiles))
+      ? result.concat(current(mainTiles))
+      : result.push(current(mainTiles));
+  }, []);
+
+  //results should be an array of arrays, each containing message[0] and points[1]
+  console.log(results);
 
   return (
     <div>
