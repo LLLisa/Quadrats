@@ -13,16 +13,16 @@ const Grid = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setGrid(genRows(mainTiles, radius));
-    if (swapTiles.length) setPool(genRows(swapTiles, 4));
+    setGrid(genRows(mainTiles, radius, radius));
+    if (swapTiles.length) setPool(genRows(swapTiles, 8, 2));
   }, [swapTiles.length]);
 
-  function genRows(array, rowLength) {
+  function genRows(array, columns, rows) {
     let tiles = array.slice();
     const result = [];
-    for (let i = 0; i < rowLength; i++) {
+    for (let i = 0; i < rows; i++) {
       const row = [];
-      for (let j = 0; j < rowLength; j++) {
+      for (let j = 0; j < columns; j++) {
         //pop() for better performance
         row.push(tiles.shift());
       }
