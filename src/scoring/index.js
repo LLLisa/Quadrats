@@ -1,4 +1,4 @@
 import { flags } from './flags';
-import { prime } from './math';
+import { prime, pi } from './math';
 
-export { flags, prime };
+export { flags, prime, pi };

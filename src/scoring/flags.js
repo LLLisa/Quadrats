@@ -1,4 +1,5 @@
-export const flags = (array) => {
+export const flags = (inputArray) => {
+  const array = inputArray.slice();
   const results = [];
   for (let i = 0; i < array.length; i++) {
     if ((i + 1) % 8 !== 0 && (i + 2) % 8 !== 0) {
