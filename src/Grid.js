@@ -10,6 +10,7 @@ const Grid = () => {
   const [grid, setGrid] = useState([]);
   const [pool, setPool] = useState([]);
   const [firstPick, setFirstPick] = useState([]);
+  const [swap, setSwap] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,20 +32,24 @@ const Grid = () => {
     return result;
   }
 
-  function handleSwitch([x1, y1], [x2, y2]) {
+  function handleSwitch(tile1, tile2) {
+    const [x1, y1] = tile1[1];
+    const [x2, y2] = tile2[1];
     [grid[x1][y1], grid[x2][y2]] = [grid[x2][y2], grid[x1][y1]];
     setGrid([...grid]);
     dispatch(setMainTiles(grid.flat()));
   }
 
-  function handlePick(i, j) {
+  function handlePick(tile) {
     if (!firstPick.length) {
-      setFirstPick([i, j]);
+      setFirstPick(tile);
     } else {
-      handleSwitch(firstPick, [i, j]);
+      handleSwitch(firstPick, tile);
       setFirstPick([]);
     }
   }
+
+  //   function handleSwap([tile, [i, j]]) {}
 
   return (
     <div>
@@ -54,7 +59,7 @@ const Grid = () => {
           {grid.map((row, i) => (
             <tr key={i}>
               {row.map((tile, j) => (
-                <td key={j} onClick={() => handlePick(i, j)}>
+                <td key={j} onClick={() => handlePick([tile, [i, j]])}>
                   {<Tile props={tile} />}
                   {/* {i},{j} */}
                 </td>
@@ -70,7 +75,7 @@ const Grid = () => {
             {pool.map((row, i) => (
               <tr key={i}>
                 {row.map((tile, j) => (
-                  <td key={j} onClick={() => handlePick(i, j)}>
+                  <td key={j} onClick={() => handlePick([tile, [i, j]])}>
                     {<Tile props={tile} />}
                     {/* {i},{j} */}
                   </td>
