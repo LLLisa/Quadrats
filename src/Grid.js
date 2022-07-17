@@ -35,7 +35,7 @@ const Grid = () => {
   function handleSwitch(tile1, tile2) {
     const [x1, y1] = tile1[1];
     const [x2, y2] = tile2[1];
-    [grid[x1][y1], grid[x2][y2]] = [grid[x2][y2], grid[x1][y1]];
+    [grid[x1][y1], grid[x2][y2]] = [tile2[0], tile1[0]];
     setGrid([...grid]);
     dispatch(setMainTiles(grid.flat()));
   }
