@@ -8,7 +8,7 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(loadMainTiles());
-    dispatch(loadSwapTiles());
+    // dispatch(loadSwapTiles());
   }, []);
 
   //for testing

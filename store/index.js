@@ -40,6 +40,14 @@ export const loadSwapTiles = () => {
   };
 };
 
+export const randomizeSwaps = () => {
+  return async (dispatch) => {
+    const response = await axios.get('/randomize');
+    console.log(response.data);
+    // dispatch(setMainTiles(response.data));
+  };
+};
+
 export const store = configureStore({
   reducer: {
     mainTiles: mainTilesSlice.reducer,

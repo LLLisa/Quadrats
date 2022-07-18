@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMainTiles } from '../store';
+import { setMainTiles, randomizeSwaps, loadMainTiles } from '../store';
 import Tile from './Tile';
 
 const Grid = () => {
@@ -26,7 +26,7 @@ const Grid = () => {
   useEffect(() => {
     setMainGrid(grid.slice(0, 8));
     setSwapGrid(grid.slice(8));
-  }, [grid.length]);
+  }, [grid]);
 
   function genRows(array, columns, rows) {
     let tiles = array.slice();
@@ -45,7 +45,7 @@ const Grid = () => {
   function handleSwitch(tile1, tile2) {
     const [x1, y1] = tile1[1];
     const [x2, y2] = tile2[1];
-    [grid[x1][y1], grid[x2][y2]] = [tile2[0], tile1[0]];
+    [grid[x1][y1], grid[x2][y2]] = [grid[x2][y2], grid[x1][y1]];
     setGrid([...grid]);
     dispatch(setMainTiles(grid.flat()));
   }
@@ -59,11 +59,15 @@ const Grid = () => {
     }
   }
 
-  //   function handleSwap([tile, [i, j]]) {}
+  function handleRandomize() {
+    dispatch(randomizeSwaps());
+    window.location.reload();
+  }
 
   return (
     <div>
-      grid {console.log(mainGrid, swapGrid)}
+      grid
+      {/* {console.log(mainGrid, swapGrid)} */}
       <table>
         <tbody>
           {grid.slice(0, 8).map((row, i) => (
@@ -71,15 +75,14 @@ const Grid = () => {
               {row.map((tile, j) => (
                 <td key={j} onClick={() => handlePick([tile, [i, j]])}>
                   {<Tile props={tile} />}
-                  {i},{j}
+                  {/* {i},{j} */}
                 </td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
-      swap tiles
-      {/* {pool[0] ? ( */}
+      swap tiles <button onClick={handleRandomize}>randomize</button>
       <table>
         <tbody>
           {grid.slice(8).map((row, i) => (
@@ -87,16 +90,13 @@ const Grid = () => {
               {row.map((tile, j) => (
                 <td key={j} onClick={() => handlePick([tile, [i + 8, j]])}>
                   {<Tile props={tile} />}
-                  {i + 8},{j}
+                  {/* {i + 8},{j} */}
                 </td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
-      {/* ) : ( */}
-      {/* <div>''</div> */}
-      {/* )} */}
     </div>
   );
 };

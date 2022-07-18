@@ -3,7 +3,7 @@ import { flags, prime, pi } from './scoring';
 import { useSelector } from 'react-redux';
 
 const Score = () => {
-  const mainTiles = useSelector((state) => state.mainTiles);
+  const mainTiles = useSelector((state) => state.mainTiles).slice(0, 64);
 
   const catgegories = [flags, prime, pi];
 
@@ -12,9 +12,6 @@ const Score = () => {
       ? result.concat(current(mainTiles))
       : result.push(current(mainTiles));
   }, []);
-
-  //results should be an array of arrays, each containing message[0] and points[1]
-  //   console.log(results);
 
   return (
     <div>

@@ -37,12 +37,13 @@ const SwapTile = db.define('swapTile', {
 
 const tileGen = async (type) => {
   try {
-    await MainTile.create({
+    const tile = await MainTile.create({
       alphanum: randomize(chars),
       color: randomize(colors),
       shape: randomize(shapes),
       isSwap: type,
     });
+    // if (type === true) console.log(tile.alphanum);
   } catch (error) {
     console.log(error);
   }
@@ -55,6 +56,7 @@ const gridGen = (numTiles) => {
 };
 
 const swapGen = (numTiles) => {
+  // console.log('swapGen call');
   for (let i = 0; i < numTiles; i++) {
     tileGen(true);
   }
@@ -70,4 +72,4 @@ const seed = async () => {
   }
 };
 
-module.exports = { db, MainTile, SwapTile, seed, gridGen };
+module.exports = { db, MainTile, SwapTile, seed, gridGen, swapGen };
