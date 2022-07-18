@@ -15,17 +15,24 @@ const tilesSlice = createSlice({
 
 export const { setTiles } = tilesSlice.actions;
 
-export const loadMainTiles = () => {
+export const loadTiles = () => {
   return async (dispatch) => {
-    const response = await axios.get('/mainTiles');
-    dispatch(setTiles(response.data));
+    const response = await axios.get('/tiles');
+    dispatch(setTiles(response.data.sort((a, b) => a.id - b.id)));
+  };
+};
+
+export const swapTiles = (tile1, tile2) => {
+  return async () => {
+    await axios.put('/swap', { tile1, tile2 });
   };
 };
 
 export const randomizeSwaps = () => {
   return async () => {
-    const response = await axios.get('/randomize');
-    console.log(response.data);
+    await axios.get('/randomize');
+    const response = await axios.get('/tiles');
+    dispatch(setTiles(response.data));
   };
 };
 

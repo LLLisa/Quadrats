@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTiles, randomizeSwaps } from '../store';
+import { setTiles, swapTiles, randomizeSwaps } from '../store';
 import Tile from './Tile';
 
 const Grid = () => {
@@ -35,6 +35,8 @@ const Grid = () => {
     [grid[x1][y1], grid[x2][y2]] = [grid[x2][y2], grid[x1][y1]];
     setGrid([...grid]);
     dispatch(setTiles(grid.flat()));
+    dispatch(swapTiles(tile1[0], tile2[0]));
+    // window.location.reload();
   }
 
   function handlePick(tile) {
