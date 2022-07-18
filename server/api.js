@@ -24,7 +24,6 @@ app.get('/tiles', async (req, res, next) => {
 
 app.put('/swap', async (req, res, next) => {
   try {
-    // console.log(req.body);
     const tile1 = await Tile.findByPk(req.body.tile1.id);
     const tile2 = await Tile.findByPk(req.body.tile2.id);
     const swap = {

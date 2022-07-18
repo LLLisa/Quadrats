@@ -36,7 +36,6 @@ const Grid = () => {
     setGrid([...grid]);
     dispatch(setTiles(grid.flat()));
     dispatch(swapTiles(tile1[0], tile2[0]));
-    // window.location.reload();
   }
 
   function handlePick(tile) {
