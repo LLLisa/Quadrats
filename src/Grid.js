@@ -11,6 +11,8 @@ const Grid = () => {
   const [pool, setPool] = useState([]);
   const [firstPick, setFirstPick] = useState([]);
   const [swap, setSwap] = useState([]);
+  const [mainGrid, setMainGrid] = useState([]);
+  const [swapGrid, setSwapGrid] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,6 +22,11 @@ const Grid = () => {
     }
     // if (swapTiles.length) setPool(genRows(swapTiles, 8, 2));
   }, [mainTiles.length]);
+
+  useEffect(() => {
+    setMainGrid(grid.slice(0, 8));
+    setSwapGrid(grid.slice(8));
+  }, [grid.length]);
 
   function genRows(array, columns, rows) {
     let tiles = array.slice();
@@ -56,17 +63,31 @@ const Grid = () => {
 
   return (
     <div>
-      grid
-      {/* {console.log(grid)} */}
-      {/* {grid.length ? ( */}
+      grid {console.log(mainGrid, swapGrid)}
       <table>
         <tbody>
-          {grid.map((row, i) => (
+          {grid.slice(0, 8).map((row, i) => (
             <tr key={i}>
               {row.map((tile, j) => (
                 <td key={j} onClick={() => handlePick([tile, [i, j]])}>
                   {<Tile props={tile} />}
-                  {/* {i},{j} */}
+                  {i},{j}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      swap tiles
+      {/* {pool[0] ? ( */}
+      <table>
+        <tbody>
+          {grid.slice(8).map((row, i) => (
+            <tr key={i}>
+              {row.map((tile, j) => (
+                <td key={j} onClick={() => handlePick([tile, [i + 8, j]])}>
+                  {<Tile props={tile} />}
+                  {i + 8},{j}
                 </td>
               ))}
             </tr>
@@ -74,27 +95,8 @@ const Grid = () => {
         </tbody>
       </table>
       {/* ) : ( */}
-      {/* '' */}
+      {/* <div>''</div> */}
       {/* )} */}
-      swap tiles
-      {pool[0] ? (
-        <table>
-          <tbody>
-            {pool.map((row, i) => (
-              <tr key={i}>
-                {row.map((tile, j) => (
-                  <td key={j} onClick={() => handlePick([tile, [i, j]])}>
-                    {<Tile props={tile} />}
-                    {/* {i},{j} */}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <div>''</div>
-      )}
     </div>
   );
 };
