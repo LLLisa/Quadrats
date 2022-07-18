@@ -3,47 +3,42 @@ import axios from 'axios';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 
-const mainTilesSlice = createSlice({
-  name: 'mainTiles',
+const tilesSlice = createSlice({
+  name: 'tiles',
   initialState: [],
   reducers: {
-    setMainTiles: (state, action) => {
+    setTiles: (state, action) => {
       return action.payload;
     },
   },
 });
 
-const swapTilesSlice = createSlice({
-  name: 'mainTiles',
-  initialState: [],
-  reducers: {
-    setSwapTiles: (state, action) => {
-      return action.payload;
-    },
-  },
-});
+export const { setTiles } = tilesSlice.actions;
 
-export const { setMainTiles } = mainTilesSlice.actions;
-export const { setSwapTiles } = swapTilesSlice.actions;
-
-export const loadMainTiles = () => {
+export const loadTiles = () => {
   return async (dispatch) => {
-    const response = await axios.get('/mainTiles');
-    dispatch(setMainTiles(response.data));
+    const response = await axios.get('/tiles');
+    dispatch(setTiles(response.data.sort((a, b) => a.id - b.id)));
   };
 };
 
-export const loadSwapTiles = () => {
-  return async (dispatch) => {
-    const response = await axios.get('/swapTiles');
-    dispatch(setSwapTiles(response.data));
+export const swapTiles = (tile1, tile2) => {
+  return async () => {
+    await axios.put('/swap', { tile1, tile2 });
+  };
+};
+
+export const randomizeSwaps = () => {
+  return async () => {
+    await axios.get('/randomize');
+    const response = await axios.get('/tiles');
+    dispatch(setTiles(response.data));
   };
 };
 
 export const store = configureStore({
   reducer: {
-    mainTiles: mainTilesSlice.reducer,
-    swapTiles: swapTilesSlice.reducer,
+    tiles: tilesSlice.reducer,
   },
   middleware: [thunk, createLogger({ collapsed: false })],
 });

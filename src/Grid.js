@@ -1,31 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMainTiles } from '../store';
+import { setTiles, swapTiles, randomizeSwaps } from '../store';
 import Tile from './Tile';
 
 const Grid = () => {
-  const mainTiles = useSelector((state) => state.mainTiles);
-  const swapTiles = useSelector((state) => state.swapTiles);
-  const radius = Math.sqrt(mainTiles.length);
+  const tiles = useSelector((state) => state.tiles);
   const [grid, setGrid] = useState([]);
-  const [pool, setPool] = useState([]);
   const [firstPick, setFirstPick] = useState([]);
-  const [swap, setSwap] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setGrid(genRows(mainTiles, radius, radius));
-    if (swapTiles.length) setPool(genRows(swapTiles, 8, 2));
-  }, [swapTiles.length]);
+    if (tiles.length) {
+      setGrid(genRows(tiles, 8, 10));
+    }
+  }, [tiles]);
 
-  function genRows(array, columns, rows) {
-    let tiles = array.slice();
+  function genRows(InputArray, columns, rows) {
+    let array = InputArray.slice();
     const result = [];
     for (let i = 0; i < rows; i++) {
       const row = [];
       for (let j = 0; j < columns; j++) {
         //pop() for better performance
-        row.push(tiles.shift());
+        row.push(array.shift());
       }
       result.push(row);
     }
@@ -35,9 +32,11 @@ const Grid = () => {
   function handleSwitch(tile1, tile2) {
     const [x1, y1] = tile1[1];
     const [x2, y2] = tile2[1];
-    [grid[x1][y1], grid[x2][y2]] = [tile2[0], tile1[0]];
+    [grid[x1][y1], grid[x2][y2]] = [grid[x2][y2], grid[x1][y1]];
     setGrid([...grid]);
-    dispatch(setMainTiles(grid.flat()));
+    dispatch(setTiles(grid.flat()));
+    dispatch(swapTiles(tile1[0], tile2[0]));
+    // window.location.reload();
   }
 
   function handlePick(tile) {
@@ -49,14 +48,17 @@ const Grid = () => {
     }
   }
 
-  //   function handleSwap([tile, [i, j]]) {}
+  function handleRandomize() {
+    dispatch(randomizeSwaps());
+    window.location.reload();
+  }
 
   return (
     <div>
       grid
       <table>
         <tbody>
-          {grid.map((row, i) => (
+          {grid.slice(0, 8).map((row, i) => (
             <tr key={i}>
               {row.map((tile, j) => (
                 <td key={j} onClick={() => handlePick([tile, [i, j]])}>
@@ -68,25 +70,21 @@ const Grid = () => {
           ))}
         </tbody>
       </table>
-      swap tiles
-      {pool[0] ? (
-        <table>
-          <tbody>
-            {pool.map((row, i) => (
-              <tr key={i}>
-                {row.map((tile, j) => (
-                  <td key={j} onClick={() => handlePick([tile, [i, j]])}>
-                    {<Tile props={tile} />}
-                    {/* {i},{j} */}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <div>''</div>
-      )}
+      swap tiles <button onClick={handleRandomize}>randomize</button>
+      <table>
+        <tbody>
+          {grid.slice(8).map((row, i) => (
+            <tr key={i}>
+              {row.map((tile, j) => (
+                <td key={j} onClick={() => handlePick([tile, [i + 8, j]])}>
+                  {<Tile props={tile} />}
+                  {/* {i + 8},{j} */}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
