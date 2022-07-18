@@ -6,7 +6,7 @@ import Tile from './Tile';
 const Grid = () => {
   const mainTiles = useSelector((state) => state.mainTiles);
   const swapTiles = useSelector((state) => state.swapTiles);
-  const radius = Math.sqrt(mainTiles.length);
+  // const radius = Math.sqrt(mainTiles.length);
   const [grid, setGrid] = useState([]);
   const [pool, setPool] = useState([]);
   const [firstPick, setFirstPick] = useState([]);
@@ -14,9 +14,12 @@ const Grid = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setGrid(genRows(mainTiles, radius, radius));
-    if (swapTiles.length) setPool(genRows(swapTiles, 8, 2));
-  }, [swapTiles.length]);
+    if (mainTiles.length) {
+      setGrid(genRows(mainTiles, 8, 10));
+      // setPool(genRows(mainTiles.slice(64), 8, 2));
+    }
+    // if (swapTiles.length) setPool(genRows(swapTiles, 8, 2));
+  }, [mainTiles.length]);
 
   function genRows(array, columns, rows) {
     let tiles = array.slice();
@@ -54,6 +57,8 @@ const Grid = () => {
   return (
     <div>
       grid
+      {/* {console.log(grid)} */}
+      {/* {grid.length ? ( */}
       <table>
         <tbody>
           {grid.map((row, i) => (
@@ -68,6 +73,9 @@ const Grid = () => {
           ))}
         </tbody>
       </table>
+      {/* ) : ( */}
+      {/* '' */}
+      {/* )} */}
       swap tiles
       {pool[0] ? (
         <table>

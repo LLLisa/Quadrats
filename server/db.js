@@ -13,6 +13,10 @@ const MainTile = db.define('mainTile', {
   shape: {
     type: Sequelize.ENUM(shapes),
   },
+  isSwap: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 const SwapTile = db.define('swapTile', {
@@ -25,14 +29,19 @@ const SwapTile = db.define('swapTile', {
   shape: {
     type: Sequelize.ENUM(shapes),
   },
+  isSwap: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
+  },
 });
 
 const tileGen = async (type) => {
   try {
-    await type.create({
+    await MainTile.create({
       alphanum: randomize(chars),
       color: randomize(colors),
       shape: randomize(shapes),
+      isSwap: type,
     });
   } catch (error) {
     console.log(error);
@@ -41,13 +50,13 @@ const tileGen = async (type) => {
 
 const gridGen = (numTiles) => {
   for (let i = 0; i < numTiles; i++) {
-    tileGen(MainTile);
+    tileGen(false);
   }
 };
 
 const swapGen = (numTiles) => {
   for (let i = 0; i < numTiles; i++) {
-    tileGen(SwapTile);
+    tileGen(true);
   }
 };
 
