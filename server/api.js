@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const { db, MainTile, SwapTile, swapGen } = require('./db');
+const { db, Tile, SwapTile, swapGen } = require('./db');
 
 module.exports = app;
 
@@ -14,16 +14,7 @@ app.get('/', (req, res) => {
 
 app.get('/mainTiles', async (req, res, next) => {
   try {
-    const response = await MainTile.findAll();
-    res.send(response);
-  } catch (error) {
-    next(error);
-  }
-});
-
-app.get('/swapTiles', async (req, res, next) => {
-  try {
-    const response = await SwapTile.findAll();
+    const response = await Tile.findAll();
     res.send(response);
   } catch (error) {
     next(error);
@@ -32,7 +23,7 @@ app.get('/swapTiles', async (req, res, next) => {
 
 app.get('/randomize', async (req, res, next) => {
   try {
-    await MainTile.destroy({
+    await Tile.destroy({
       where: {
         isSwap: true,
       },

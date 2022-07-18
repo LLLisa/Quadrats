@@ -1,41 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMainTiles, randomizeSwaps, loadMainTiles } from '../store';
+import { setTiles, randomizeSwaps } from '../store';
 import Tile from './Tile';
 
 const Grid = () => {
-  const mainTiles = useSelector((state) => state.mainTiles);
-  const swapTiles = useSelector((state) => state.swapTiles);
-  // const radius = Math.sqrt(mainTiles.length);
+  const tiles = useSelector((state) => state.tiles);
   const [grid, setGrid] = useState([]);
-  const [pool, setPool] = useState([]);
   const [firstPick, setFirstPick] = useState([]);
-  const [swap, setSwap] = useState([]);
-  const [mainGrid, setMainGrid] = useState([]);
-  const [swapGrid, setSwapGrid] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (mainTiles.length) {
-      setGrid(genRows(mainTiles, 8, 10));
-      // setPool(genRows(mainTiles.slice(64), 8, 2));
+    if (tiles.length) {
+      setGrid(genRows(tiles, 8, 10));
     }
-    // if (swapTiles.length) setPool(genRows(swapTiles, 8, 2));
-  }, [mainTiles.length]);
+  }, [tiles]);
 
-  useEffect(() => {
-    setMainGrid(grid.slice(0, 8));
-    setSwapGrid(grid.slice(8));
-  }, [grid]);
-
-  function genRows(array, columns, rows) {
-    let tiles = array.slice();
+  function genRows(InputArray, columns, rows) {
+    let array = InputArray.slice();
     const result = [];
     for (let i = 0; i < rows; i++) {
       const row = [];
       for (let j = 0; j < columns; j++) {
         //pop() for better performance
-        row.push(tiles.shift());
+        row.push(array.shift());
       }
       result.push(row);
     }
@@ -47,7 +34,7 @@ const Grid = () => {
     const [x2, y2] = tile2[1];
     [grid[x1][y1], grid[x2][y2]] = [grid[x2][y2], grid[x1][y1]];
     setGrid([...grid]);
-    dispatch(setMainTiles(grid.flat()));
+    dispatch(setTiles(grid.flat()));
   }
 
   function handlePick(tile) {
@@ -67,7 +54,6 @@ const Grid = () => {
   return (
     <div>
       grid
-      {/* {console.log(mainGrid, swapGrid)} */}
       <table>
         <tbody>
           {grid.slice(0, 8).map((row, i) => (

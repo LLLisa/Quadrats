@@ -3,7 +3,7 @@ import { flags, prime, pi } from './scoring';
 import { useSelector } from 'react-redux';
 
 const Score = () => {
-  const mainTiles = useSelector((state) => state.mainTiles).slice(0, 64);
+  const mainTiles = useSelector((state) => state.tiles).slice(0, 64);
 
   const catgegories = [flags, prime, pi];
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadMainTiles, loadSwapTiles } from '../store';
+import { loadMainTiles } from '../store';
 
 const Header = () => {
   const state = useSelector((state) => state);
@@ -8,13 +8,7 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(loadMainTiles());
-    // dispatch(loadSwapTiles());
   }, []);
-
-  //for testing
-  //   useEffect(() => {
-  //     console.log(state);
-  //  }, [state.mainTiles]);
 
   return <div>header</div>;
 };
