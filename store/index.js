@@ -40,5 +40,5 @@ export const store = configureStore({
   reducer: {
     tiles: tilesSlice.reducer,
   },
-  middleware: [thunk, createLogger({ collapsed: false })],
+  middleware: [thunk, createLogger({ collapsed: true })],
 });

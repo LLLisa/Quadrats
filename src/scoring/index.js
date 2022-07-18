@@ -1,4 +1,6 @@
 import { flags } from './flags';
-import { prime, pi } from './math';
+import { prime, pi, nice } from './math';
 
-export { flags, prime, pi };
+const exports = [flags, prime, pi, nice];
+
+export default exports;
