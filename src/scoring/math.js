@@ -1,9 +1,4 @@
-const allNums = (inputArray) => {
-  const array = inputArray.slice();
-  return array
-    .filter((x) => '0123456789'.includes(x.alphanum))
-    .map((x) => x.alphanum * 1);
-};
+import { allNums, oneString } from './util';
 
 export const prime = (inputArray) => {
   const array = inputArray.slice();
@@ -21,8 +16,6 @@ export const prime = (inputArray) => {
 
 export const pi = (inputArray) => {
   const array = inputArray.slice();
-  const numStr = allNums(array).join('');
-  console.log(numStr);
-  if (numStr.includes('314')) return [['Pi!', 314]];
+  if (oneString(array).includes('314')) return [['Pi!', 314]];
   return [];
 };
