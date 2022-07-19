@@ -23,15 +23,15 @@ export const loadTiles = () => {
 };
 
 export const swapTiles = (tile1, tile2) => {
-  return async (dispatch) => {
-    const response = await axios.put('/swap', { tile1, tile2 });
-    // dispatch(setTiles(response.data.sort((a, b) => a.id - b.id)));
+  return async () => {
+    await axios.put('/swap', { tile1, tile2 });
   };
 };
 
 export const randomizeSwaps = () => {
   return async () => {
     await axios.get('/randomize');
+    //I don't know why this line is necessary but it is
     await axios.get('/tiles');
   };
 };
