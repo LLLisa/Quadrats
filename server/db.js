@@ -57,4 +57,4 @@ const seed = async () => {
   }
 };
 
-module.exports = { Tile, seed, swapGen };
+module.exports = { db, Tile, seed, swapGen };

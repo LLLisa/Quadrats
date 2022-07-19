@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const { Tile, swapGen } = require('./db');
+const { db, Tile, swapGen } = require('./db');
 
 module.exports = app;
 
@@ -26,20 +26,14 @@ app.put('/swap', async (req, res, next) => {
   try {
     const tile1 = await Tile.findByPk(req.body.tile1.id);
     const tile2 = await Tile.findByPk(req.body.tile2.id);
-    const swap = {
-      alphanum: tile1.alphanum,
-      color: tile1.color,
-      shape: tile1.shape,
-    };
-    await tile1.update({
-      alphanum: tile2.alphanum,
-      color: tile2.color,
-      shape: tile2.shape,
-    });
-    await tile2.update(swap);
+    await Promise.all([tile1.destroy(), tile2.destroy()]);
+    const [newTile1, newTile2] = await Promise.all([
+      Tile.create({ ...req.body.tile1, id: req.body.tile2.id }),
+      Tile.create({ ...req.body.tile2, id: req.body.tile1.id }),
+    ]);
     res.sendStatus(204);
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 });
 
