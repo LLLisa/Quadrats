@@ -30,7 +30,7 @@ const Score = () => {
           points
         </div>
       ) : (
-        ''
+        <div>total: 0 points</div>
       )}
     </div>
   );
