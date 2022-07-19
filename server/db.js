@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
-const db = new Sequelize('postgres://localhost/quadrats', { logging: false });
+const db = new Sequelize(
+  process.env.DATABASE_URL || 'postgres://localhost/quadrats',
+  { logging: false }
+);
 
 const { colors, shapes, chars, randomize } = require('./data');
 
