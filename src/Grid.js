@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTiles, swapTiles, randomizeSwaps } from '../store';
+import { setTiles, swapTiles, randomizeSwaps, loadTiles } from '../store';
 import Tile from './Tile';
 
 const Grid = () => {
@@ -29,13 +29,22 @@ const Grid = () => {
     return result;
   }
 
-  function handleSwitch(tile1, tile2) {
-    const [x1, y1] = tile1[1];
-    const [x2, y2] = tile2[1];
-    [grid[x1][y1], grid[x2][y2]] = [grid[x2][y2], grid[x1][y1]];
-    setGrid([...grid]);
-    dispatch(setTiles(grid.flat()));
-    dispatch(swapTiles(tile1[0], tile2[0]));
+  async function handleSwitch(tile1, tile2) {
+    if (tile1[0] !== tile2[0]) {
+      const tile1Index = tiles.indexOf(tile1[0]);
+      const tile2Index = tiles.indexOf(tile2[0]);
+      const [x1, y1] = tile1[1];
+      const [x2, y2] = tile2[1];
+      [grid[x1][y1], grid[x2][y2]] = [grid[x2][y2], grid[x1][y1]];
+      await dispatch(
+        swapTiles(
+          { ...tile1[0], id: tile1Index + 1 },
+          { ...tile2[0], id: tile2Index + 1 }
+        )
+      );
+      setGrid([...grid]);
+      dispatch(setTiles(grid.flat()));
+    }
   }
 
   function handlePick(tile) {
@@ -47,9 +56,10 @@ const Grid = () => {
     }
   }
 
-  function handleRandomize() {
-    dispatch(randomizeSwaps());
-    window.location.reload();
+  async function handleRandomize() {
+    await dispatch(randomizeSwaps());
+    dispatch(loadTiles());
+    setGrid(genRows(tiles, 8, 10));
   }
 
   return (

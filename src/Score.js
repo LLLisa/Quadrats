@@ -3,12 +3,12 @@ import catgegories from './scoring';
 import { useSelector } from 'react-redux';
 
 const Score = () => {
-  const mainTiles = useSelector((state) => state.tiles).slice(0, 64);
+  const tiles = useSelector((state) => state.tiles).slice(0, 64);
 
   const results = catgegories.reduce((result, current) => {
-    return Array.isArray(current(mainTiles))
-      ? result.concat(current(mainTiles))
-      : result.push(current(mainTiles));
+    return Array.isArray(current(tiles))
+      ? result.concat(current(tiles))
+      : result.push(current(tiles));
   }, []);
 
   return (
