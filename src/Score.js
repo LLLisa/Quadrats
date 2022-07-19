@@ -1,11 +1,9 @@
 import React from 'react';
-import { flags, prime, pi } from './scoring';
+import catgegories from './scoring';
 import { useSelector } from 'react-redux';
 
 const Score = () => {
   const mainTiles = useSelector((state) => state.tiles).slice(0, 64);
-
-  const catgegories = [flags, prime, pi];
 
   const results = catgegories.reduce((result, current) => {
     return Array.isArray(current(mainTiles))
@@ -32,7 +30,7 @@ const Score = () => {
           points
         </div>
       ) : (
-        ''
+        <div>total: 0 points</div>
       )}
     </div>
   );
